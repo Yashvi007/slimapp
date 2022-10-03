@@ -1,0 +1,121 @@
+<?php 
+require '../src/config/db.php';
+?>
+<html>
+<head>
+	<title>Total Blogs</title>
+	<style type="text/css">
+
+	#pat th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #3f3f3f;
+  color: white;
+}
+
+	</style>
+<link rel="stylesheet"  type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="../index.php" style="background-color: #ddddee; padding: 5px;"> Logout</a>
+  <h5 class="text-center">	 Admins Dashboard</h5>
+</nav>
+</head>
+<body>
+	
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<div class="row">
+				
+				
+					<h5 class="text-center my-3">Total Blogs</h5>
+					<?php
+						$query=" SELECT * FROM blog where author='$id'";
+						$res= mysqli_query($connect,$query);
+						$output="";
+						$output .="
+						<table id='pat' class='table table-bordered'>
+							<tr>
+					 			<th>ID</td>
+								<th>Title</th>
+								  <th>Content</th>
+								  <th>Author</th>
+								 <th>Last Edited on</th>
+								 <th>Last Edited By</th>
+								 <th>Edit Blog</th>
+								 <th>Delete BLog</th>
+					
+								</tr>
+						";
+						if(mysqli_num_rows($res)<1)
+{
+$output .= "
+
+<tr>
+<td class='text-center' colspan='10'>No Blogs Posted Yet</td>
+</tr>
+
+";
+}
+
+while($row=mysqli_fetch_array($res))
+{
+	$author=$row['author'];
+	$edit=$row['editedby'];
+
+	$q1="SELECT * from admin where id='$author'";
+	$rees= mysqli_query($connect,$q1);
+	$roow=mysqli_fetch_array($rees);
+	
+	$q2="SELECT * from admin where id='$edit'";
+	$rees1= mysqli_query($connect,$q2);
+	$roow1=mysqli_fetch_array($rees1);
+	$bid=$row['id'];
+$output .= "
+
+
+
+<tr>
+<td>".$row['id']."</td>
+<td>".$row['title']."</td>
+<td>".$row['content']."</td>
+<td>".$roow['username']."</td>
+<td>".$row['lastedited']."</td>
+<td>".$roow1['username']."</td>
+<td><a href='../editblog.php/".$id."/".$bid."'>
+<button class='btn btn-success' style='size:100px;'>Edit</button>
+
+
+						</a>
+						</td>
+<td><a href='../deleteblog.php?id=".$id."&bid=".$bid."'>
+<button class='btn btn-success' style='size:100px;'>Delete</button>
+
+
+						</a>
+						</td>
+";
+
+}	
+$output .="
+</tr>
+</table>
+
+";
+
+
+
+
+echo $output;
+
+					 ?>
+
+				
+			</div>
+		</div>
+		
+	</div>
+</body>
+</html>
+
+

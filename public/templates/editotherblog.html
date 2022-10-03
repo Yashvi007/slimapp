@@ -1,0 +1,103 @@
+
+<?php 
+require '../src/config/db.php';
+
+$q1 = "SELECT * from blog where id='$bid'";
+$r1 = mysqli_query($connect, $q1);
+$ro1 = mysqli_fetch_array($r1);
+if (!empty($ro1)) {
+    $title = $ro1['title'];
+    $content=$ro1['content'];
+    
+    
+}
+
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        @media (max-width: 420px) {
+            input[type="file"] {
+                color: transparent;
+                width: 100% !important;
+            }
+        }
+    </style>
+    <title>Edit Admin Details</title>
+
+    <script>
+        $(function () {
+            $('input[type="file"]').change(function () {
+                if ($(this).val() != "") {
+                    $(this).css('color', '#333');
+                } else {
+                    $(this).css('color', 'transparent');
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+
+<div class="wrapper">
+    
+
+    <div id="content" style="padding: 0px 10px !important;">
+        
+
+        <h1 class="text-center">Edit Blog</h1>
+        <link rel="stylesheet"  type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="../../index.php" style="background-color: #ddddee; padding: 5px;"> Logout</a>
+  <h5 class="text-center"> Admins Dashboard</h5>
+</nav>
+
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        
+                    </div>
+                    <div class="col-md-8">
+                      <form method="post" action="../../templates/changeotherblog.php">
+
+    <div class="form-group"  style="width: 250px;">
+    
+    <input type="text" class="form-control" required name="bid" hidden id="bid" value="<?php echo $bid; ?>">
+    </div>
+
+  <div class="form-group"  style="width: 250px;">
+    <label >Title</label>
+    <input type="text" class="form-control"  placeholder="Enter Title" required name="title" id="title" value="<?php echo $title; ?>">
+  </div>
+
+  <div class="form-group" style="width: 250px;">
+    <label >Content</label>
+    <input type="text" class="form-control"  placeholder="Password" required name="content" value="<?php echo $content; ?>">
+  </div>
+  
+  <div class="form-group"  style="width: 250px;">
+    <input type="text" class="form-control" required name="id" hidden id="id" value="<?php echo $id; ?>">
+    
+  </div>
+  
+  <button type="submit" class="btn btn-primary" name="submit" id='submit'>Submit</button>
+</form>  
+                </div>
+                
+            </div> 
+        </div>
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
+
+

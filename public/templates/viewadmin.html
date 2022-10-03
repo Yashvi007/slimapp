@@ -1,0 +1,111 @@
+ <?php 
+require '../src/config/db.php';
+ ?>
+   	<html>
+<head>
+	<title>Total Admins</title>
+	<style type="text/css">
+
+	#pat th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #000000;
+  color: white;
+}
+
+	</style>
+<link rel="stylesheet"  type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="index.php" style="background-color: #ddddee; padding: 5px;"> Logout</a>
+  <h5 class="text-center">Super Admins Dashboard</h5>
+</nav>
+</head>
+<body>
+	
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<div class="row">
+			
+					<h5 class="text-center my-3">Total Admin</h5>
+					<?php
+						$query=" SELECT * FROM admin";
+						$res= mysqli_query($connect,$query);
+						$output="";
+						$output .="
+						<table id='pat' class='table table-striped '>
+							<tr >
+					 			<th>ID</td>
+								<th>Username</th>
+								  <th>Password</th>
+								 <th>Can read</th>
+								    <th>Can update</th>
+								   
+								    <th>Can delete</th>
+								 	<th>Edit</th>
+								 	<th>Delete</th>
+					
+								</tr>
+						";
+						if(mysqli_num_rows($res)<1)
+{
+$output .= "
+
+<tr>
+<td class='text-center' colspan='10'>No Admin Yet</td>
+</tr>
+
+";
+}
+
+while($row=mysqli_fetch_array($res))
+{
+$id=$row['id'];
+$output .= "
+
+
+
+<tr>
+<td>".$row['id']."</td>
+<td>".$row['username']."</td>
+<td>".$row['password']."</td>
+<td>".$row['readblog']."</td>
+<td>".$row['updateblog']."</td>
+<td>".$row['deleteblog']."</td>
+<td><a href='editadmin.php/".$id."'>
+						<button class='btn btn-success' style='size:100px;'>Edit</button>
+
+
+						</a>
+						</td>
+<td><a href='deleteadmin.php?id=".$id."'>
+<button class='btn btn-success' style='size:100px;'>Delete</button>
+
+
+						</a>
+						</td>
+";
+
+}	
+$output .="
+</tr>
+</table>
+
+";
+
+
+
+
+echo $output;
+
+					 ?>
+
+				</div>
+			</div>
+		</div>
+		
+	
+</body>
+</html>
+
+
